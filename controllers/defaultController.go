@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
-	"log"
+	"os"
 )
 
 type MainController struct {
@@ -10,7 +10,15 @@ type MainController struct {
 }
 
 func (m *MainController) Get() {
-	log.Println("main get")
+	// 展示系统的环境变量
+	envKeys := os.Environ()
+	envData := make(map[string]string, len(envKeys))
+	for _, keyString := range envKeys {
+		valueString := os.Getenv(keyString)
+		envData[keyString] = valueString
+	}
+	m.Data["environ"] = envData
+
 	m.TplName = "index.tpl"
 	m.Data["NavType"] = "main"
 }

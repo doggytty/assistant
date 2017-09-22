@@ -4,9 +4,24 @@ import (
 	_ "github.com/doggytty/assistant/routers"
 	"github.com/astaxie/beego"
 	"github.com/doggytty/assistant/filters"
+	"github.com/astaxie/beego/logs"
+	"github.com/doggytty/assistant/models"
 )
 
 func main() {
+	// beego默认logger
+	logs.Async()	// log异步输出
+	logs.EnableFuncCallDepth(true)
+	if beego.BConfig.RunMode == "dev" {
+		logs.SetLogger(logs.AdapterConsole)
+	} else {
+		logs.SetLogger(logs.AdapterFile, `{"filename":"assistant.log","daily":true,"maxdays":10}`)
+	}
+
+	// database
+	models.SyncDataBase()
+
+
 	// 修改模板的位置
 	beego.BConfig.WebConfig.ViewsPath = "templates"
 	// 关闭自动渲染
@@ -21,7 +36,7 @@ func main() {
 
 	// 启用session
 	beego.BConfig.WebConfig.Session.SessionOn = true
-	beego.BConfig.WebConfig.Session.SessionProvider = "memory"
+	//beego.BConfig.WebConfig.Session.SessionProvider = "memory"
 	//beego.BConfig.WebConfig.Session.SessionProvider = "redis"
 	//beego.BConfig.WebConfig.Session.SessionProviderConfig = "127.0.0.1:6379"
 

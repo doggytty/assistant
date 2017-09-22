@@ -3,7 +3,7 @@ package controllers
 import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
-	"log"
+	"github.com/astaxie/beego/logs"
 )
 
 type BaseController struct {
@@ -14,12 +14,12 @@ func (base *BaseController) Init(ctx *context.Context, controllerName, actionNam
 	// 调用默认初始化设置
 	base.Controller.Init(ctx, controllerName, actionName, app)
 	// 自定义初始化设置
-	log.Println("base controller Init")
+	logs.Debug("base controller Init")
 }
 
 
 func (base *BaseController) Prepare() {
-	log.Println("base controller Prepare")
+	logs.Debug("base controller Prepare")
 	base.Layout = "layout/base.tpl"
 	base.LayoutSections = make(map[string]string)
 	base.LayoutSections["Header"] = "layout/header.tpl"

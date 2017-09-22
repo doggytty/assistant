@@ -8,7 +8,7 @@
         </div>
         <div class="col-md-2 header">
             <button>登录</button>
-            <button>退出</button>
+            <button >退出</button>
         </div>
         
         <!--<div class="hidden-sm hidden-xs pull-right" style="display: inline-block;">-->
